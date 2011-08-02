@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<title>Viewporter demo</title>
+	
+	<style type="text/css" media="screen">
+		html, body {
+			margin: 0;
+			padding: 0;
+			font-family: Arial;
+			font-size: 12px;
+			color: white;
+			background: green;
+		}
+		
+		p {
+			margin: 0;
+			padding: 1em;
+			padding-bottom: 0;
+		}
+		
+		#checker-bl, #checker-tr {
+			position: absolute;
+			width: 50%;
+			height: 50%;
+		}
+		
+		#checker-bl {
+			position: absolute;
+			background: blue;
+			bottom: 0;
+			left: 0;
+		}
+		
+		#checker-tr {
+			position: absolute;
+			background: red;
+			top: 0;
+			right: 0;
+		}
+		
+		#meter {
+			height: 70px;
+			width: 100px;
+			background: yellow;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			z-index: 2;
+			padding: 5px;
+		}
+		
+		#meter span {
+			color: black;
+			font-size: 10px;
+		}
+	</style>
+	
+	<script src="viewporter.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	
+	<script type="text/javascript">
+
+		z.viewporter.settings.maxDensity = false;
+
+		var log = function() {
+			var args = Array.prototype.slice.call(arguments);
+			$("body").append("<p>"+args.join(' ')+"</p>");
+		};
+		
+		var debug = function() {
+			
+			log('landscape:', z.viewporter.isLandscape(), '('+window.orientation+')');
+			log('ppi:', z.viewporter.DEVICE_DENSITY);
+
+			$('#viewporter-debug-width').text(window.innerWidth);
+			$('#viewporter-debug-height').text(window.innerHeight);
+			$('#viewporter-debug-useragent').text(navigator.userAgent);
+			$('#viewporter-debug-metaviewport').text(z.viewporter.META_VIEWPORT_CONTENT);
+			
+		};
+		
+		$(window).bind(z.viewporter.ACTIVE ? 'viewportready viewportchange' : 'load', function() {
+			debug();
+		});
+
+	</script>
+	
+</head>
+<body>
+	
+	<div id="meter"><span>if DPI normalization is on, check if this element has the same size on every device.</span></div>
+	
+	<div id="checker-bl">
+		<p><strong>window width:</strong> <span id="viewporter-debug-width"></span></p>
+		<p><strong>window height:</strong> <span id="viewporter-debug-height"></span></p>
+	</div>
+	<div id="checker-tr">
+		<p><strong>user agent:</strong> <span id="viewporter-debug-useragent"></span></p>
+		<p><strong>meta viewport:</strong> <span id="viewporter-debug-metaviewport"></span></p>
+	</div>
+
+</body>
+</html>
