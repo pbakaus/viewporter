@@ -11,7 +11,7 @@ When put into the header of a page and when running a mobile device, Viewporter 
 What's wrong with doing it manually?
 ------------------------------------
 
-You could of course try to set the viewport meta tag yourselves, as suggested in [various](https://developer.mozilla.org/en/mobile/viewport_meta_tag) [places](http://dev.opera.com/articles/view/an-introduction-to-meta-viewport-and-viewport/), usually something like *<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">*. You will quickly recognize two apparent issues:
+You could of course try to set the viewport meta tag yourselves, as suggested in [various](https://developer.mozilla.org/en/mobile/viewport_meta_tag) [places](http://dev.opera.com/articles/view/an-introduction-to-meta-viewport-and-viewport/), usually something like *&lt;meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"&gt;*. You will quickly recognize two apparent issues:
 
 * device-width is lying (device-width is often *not* the actual screen width)
 * proportional device-height doesn't subtract the chrome height, so the window is always larger than the viewport when set, causing scrollbars even on empty pages
@@ -29,7 +29,7 @@ So what's in it for you? There's a couple of automatic advantages for you when t
 Easy layouting?
 ---------------
 
-Yep. Take a *<div>*, position it absolutely, set its width and height to "50%", left and bottom to 0 and the background to any color. With Viewporter enabled,  it will be placed at the bottom left corner of the window, and stretch to the middle of the window. Sounds obvious right? It isn't really, when you want a maximized window.
+Yep. Take a *&lt;div&gt;*, position it absolutely, set its width and height to "50%", left and bottom to 0 and the background to any color. With Viewporter enabled,  it will be placed at the bottom left corner of the window, and stretch to the middle of the window. Sounds obvious right? It isn't really, when you want a maximized window.
 
 API
 ---
