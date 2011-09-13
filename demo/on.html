@@ -1,65 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	
+	<title>Viewporter enabled</title>
+	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-	<title>Viewporter demo</title>
 	
-	<style type="text/css" media="screen">
-		html, body {
-			margin: 0;
-			padding: 0;
-			font-family: Arial;
-			font-size: 12px;
-			color: white;
-			background: green;
-		}
-		
-		p {
-			margin: 0;
-			padding: 1em;
-			padding-bottom: 0;
-		}
-		
-		#checker-bl, #checker-tr {
-			position: absolute;
-			width: 50%;
-			height: 50%;
-		}
-		
-		#checker-bl {
-			position: absolute;
-			background: blue;
-			bottom: 0;
-			left: 0;
-		}
-		
-		#checker-tr {
-			position: absolute;
-			background: red;
-			top: 0;
-			right: 0;
-		}
-		
-		#meter {
-			height: 70px;
-			width: 100px;
-			background: yellow;
-			position: absolute;
-			bottom: 0;
-			right: 0;
-			z-index: 2;
-			padding: 5px;
-		}
-		
-		#meter span {
-			color: black;
-			font-size: 10px;
-		}
-	</style>
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
 	
-	<script src="viewporter.js"></script>
+	<script src="../viewporter.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	
 	<script type="text/javascript">
@@ -67,8 +18,7 @@
 		z.viewporter.settings.maxDensity = false;
 
 		var log = function() {
-			var args = Array.prototype.slice.call(arguments);
-			$("body").append("<p>"+args.join(' ')+"</p>");
+			$("body").append("<p>"+Array.prototype.slice.call(arguments).join(' ')+"</p>");
 		};
 		
 		var debug = function() {

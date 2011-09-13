@@ -159,7 +159,7 @@ var z = z || {};
 					window.scrollTo(0,1);
 			
 					// try to see if the best condition matches, otherwise timeout after 10 iterations (100ms)
-					$('body').append('<p>'+window.innerHeight+', '+that.data.chromeHeight+'</p>')
+					//$('body').append('<p>'+window.innerHeight+', '+that.data.chromeHeight+'</p>');
 					if( (z.viewporter.DEVICE_SUPPORTED && ( Math.abs(window.innerHeight - Math.ceil(that.data.height - that.data.chromeHeight)) < 5 )) || (iterationCount > 10) ) { 
 						
 						// clear the running checks
