@@ -38,10 +38,8 @@ Viewporter has a couple of useful settings, constants, events and methods.
 
 ### Settings
 
-* z.viewporter.settings.maxDensity (default: false)
+* z.viewporter.settings.maxDensity (default: 163)
   This setting will override the native resolution for a given PPI. This allows you to design a 100px element that say, correlates to 2cm on any screen, on any device.
-* z.viewporter.settings.orientationLock (default: false)
-  Can be set to either "vertical" or "horizontal" and will *lock* the device to a certain orientation, blending in a warning that the user should rotate back when rotated to the wrong side.
 
 ### Constants
 

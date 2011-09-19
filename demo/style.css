@@ -48,3 +48,17 @@ p {
 	color: black;
 	font-size: 10px;
 }
+
+#orientationlock {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	background: #333;
+	color: #fff;
+	font-size: 5em;
+	padding: 1em;
+	padding-top: 3em;
+}

@@ -16,7 +16,6 @@ var z = z || {};
 
 		// settings
 		settings: {
-			orientationLock: false, // landscape, portrait
 			maxDensity: 163 // this is iPhone non-retina, set to false for purist/always native
 		},
 
