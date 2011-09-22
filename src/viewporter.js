@@ -1,12 +1,11 @@
-var z = z || {};
-
+var viewporter;
 (function() {
 
 	// initialize private constants
 	var DEFAULT_ROTATION_LANDSCAPE = false;
 
 	// initialize viewporter object
-	z.viewporter = {
+	viewporter = {
 
 		// constants
 		ACTIVE: (('ontouchstart' in window) || (/webos/i).test(navigator.userAgent)),
@@ -33,12 +32,12 @@ var z = z || {};
 	};
 
 	// if we are on Desktop, no need to go further
-	if (!z.viewporter.ACTIVE) {
+	if (!viewporter.ACTIVE) {
 		return;
 	}
 	
 	// create private constructor with prototype..just looks cooler
-	var Viewporter = function() {
+	var _Viewporter = function() {
 		
 		var that = this;
 		
@@ -72,7 +71,7 @@ var z = z || {};
 
 	};
 
-	Viewporter.prototype = {
+	_Viewporter.prototype = {
 
 		computeViewportInformation: function() {
 
@@ -88,7 +87,7 @@ var z = z || {};
 			DEFAULT_ROTATION_LANDSCAPE = profile ? profile.inverseLandscape : false;
 
 			// initialize working variables
-			var landscape = z.viewporter.isLandscape(),
+			var landscape = viewporter.isLandscape(),
 				ppi = 0, ppiFactor = 1,
 				width = !DEFAULT_ROTATION_LANDSCAPE ? screen.height : screen.width,
 				height = !DEFAULT_ROTATION_LANDSCAPE ? screen.width : screen.height,
@@ -102,9 +101,9 @@ var z = z || {};
 			// check if the ppi is higher than the max, normalize if it is
 			ppi = typeof profile.ppi == 'function' ? profile.ppi() : profile.ppi;
 			if(ppi) {
-				z.viewporter.DEVICE_DENSITY = ppi;
-				if(z.viewporter.settings.maxDensity && ppi > z.viewporter.settings.maxDensity) {
-					ppiFactor *= z.viewporter.settings.maxDensity/ppi;
+				viewporter.DEVICE_DENSITY = ppi;
+				if(viewporter.settings.maxDensity && ppi > viewporter.settings.maxDensity) {
+					ppiFactor *= viewporter.settings.maxDensity/ppi;
 					scale = this.IS_ANDROID ? 1 : (scale / ppiFactor);
 				}
 			}
@@ -137,7 +136,7 @@ var z = z || {};
 				chromeHeight: chromeHeight * (chromeWasPrescaled ? 1 : ppiFactor)
 			};
 			
-			z.viewporter.DEVICE_SUPPORTED = true;
+			viewporter.DEVICE_SUPPORTED = true;
 
 		},
 		
@@ -150,7 +149,7 @@ var z = z || {};
 				interval = window.setInterval(function() {
 					
 					// make the height of the document really large, so we actually have a chance to scroll the url bar away
-					if(!z.viewporter.DEVICE_SUPPORTED) {
+					if(!viewporter.DEVICE_SUPPORTED) {
 						that.maximizeDocumentElement();
 					}
 					
@@ -159,13 +158,13 @@ var z = z || {};
 			
 					// try to see if the best condition matches, otherwise timeout after 10 iterations (100ms)
 					//$('body').append('<p>'+window.innerHeight+', '+that.data.chromeHeight+'</p>');
-					if( (z.viewporter.DEVICE_SUPPORTED && ( Math.abs(window.innerHeight - Math.ceil(that.data.height - that.data.chromeHeight)) < 5 )) || (iterationCount > 10) ) { 
+					if( (viewporter.DEVICE_SUPPORTED && ( Math.abs(window.innerHeight - Math.ceil(that.data.height - that.data.chromeHeight)) < 5 )) || (iterationCount > 10) ) { 
 						
 						// clear the running checks
 						clearInterval(interval);
 						
 						// reset the height of the document
-						if(!z.viewporter.DEVICE_SUPPORTED) {
+						if(!viewporter.DEVICE_SUPPORTED) {
 							//that.fixDocumentElement(window.innerHeight);
 						}
 						
@@ -188,9 +187,9 @@ var z = z || {};
 		},
 		
 		getProfile: function() {
-			for(var searchTerm in z.viewporter.profiles) {
+			for(var searchTerm in viewporter.profiles) {
 				if(new RegExp(searchTerm).test(navigator.userAgent)) {
-					return z.viewporter.profiles[searchTerm];
+					return viewporter.profiles[searchTerm];
 				}
 			}
 			return null;
@@ -238,7 +237,7 @@ var z = z || {};
 
 			node = node || document.getElementById('metaviewport');
 
-			var content = z.viewporter.DEVICE_SUPPORTED ? [
+			var content = viewporter.DEVICE_SUPPORTED ? [
 					'width=' + this.data.width,
 					'height=' + (this.data.height - this.data.chromeHeight),
 					'initial-scale=' + this.data.scale,
@@ -248,14 +247,14 @@ var z = z || {};
 			
 			// if we're on Android, we need to give the viewport a target density
 			if(this.IS_ANDROID) {
-				content.unshift('target-densityDpi='+(z.viewporter.DEVICE_DENSITY ? (z.viewporter.settings.maxDensity || 'device-dpi') : 'device-dpi'));
+				content.unshift('target-densityDpi='+(viewporter.DEVICE_DENSITY ? (viewporter.settings.maxDensity || 'device-dpi') : 'device-dpi'));
 			}
 		
 			// apply viewport data
-			z.viewporter.META_VIEWPORT_CONTENT = content.join(',');
-			node.setAttribute('content', z.viewporter.META_VIEWPORT_CONTENT);
+			viewporter.META_VIEWPORT_CONTENT = content.join(',');
+			node.setAttribute('content', viewporter.META_VIEWPORT_CONTENT);
 				
-			if(z.viewporter.DEVICE_SUPPORTED) {
+			if(viewporter.DEVICE_SUPPORTED) {
 				this.fixDocumentElement();
 			}
 
@@ -264,13 +263,13 @@ var z = z || {};
 	};
 
 	// initialize
-	new Viewporter();
+	new _Viewporter();
 
 })();
 
 
 // profiles for viewporter
-z.viewporter.profiles = {
+viewporter.profiles = {
 
 	'iPhone|iPod': {
 		ppi: function() { return window.devicePixelRatio >= 2 ? 326 : 163; },
@@ -286,9 +285,9 @@ z.viewporter.profiles = {
 			//}			
 			
 			if(window.devicePixelRatio >= 2) {
-				return ((navigator.standalone ? 0 : (z.viewporter.isLandscape() ? 100 : 124)) * scale) + 2;
+				return ((navigator.standalone ? 0 : (viewporter.isLandscape() ? 100 : 124)) * scale) + 2;
 			} else {
-				return ((navigator.standalone ? 0 : (z.viewporter.isLandscape() ? 50 : 62)) * scale) + 2;
+				return ((navigator.standalone ? 0 : (viewporter.isLandscape() ? 50 : 62)) * scale) + 2;
 			}
 			
 		}

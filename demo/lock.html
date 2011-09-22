@@ -15,7 +15,7 @@
 	
 	<script type="text/javascript">
 
-		z.viewporter.settings.maxDensity = false;
+		viewporter.settings.maxDensity = false;
 
 		var log = function() {
 			$("body").append("<p>"+Array.prototype.slice.call(arguments).join(' ')+"</p>");
@@ -23,23 +23,23 @@
 		
 		var debug = function() {
 			
-			log('landscape:', z.viewporter.isLandscape(), '('+window.orientation+')');
-			log('ppi:', z.viewporter.DEVICE_DENSITY);
+			log('landscape:', viewporter.isLandscape(), '('+window.orientation+')');
+			log('ppi:', viewporter.DEVICE_DENSITY);
 
 			$('#viewporter-debug-width').text(window.innerWidth);
 			$('#viewporter-debug-height').text(window.innerHeight);
 			$('#viewporter-debug-useragent').text(navigator.userAgent);
-			$('#viewporter-debug-metaviewport').text(z.viewporter.META_VIEWPORT_CONTENT);
+			$('#viewporter-debug-metaviewport').text(viewporter.META_VIEWPORT_CONTENT);
 			
 		};
 		
-		$(window).bind(z.viewporter.ACTIVE ? 'viewportready viewportchange' : 'load', function() {
+		$(window).bind(viewporter.ACTIVE ? 'viewportready viewportchange' : 'load', function() {
 			debug();
 		});
 		
 		// orientation locking
 		$(window).bind('viewportready viewportchange', function() {
-			$('#orientationlock').toggle(z.viewporter.isLandscape());
+			$('#orientationlock').toggle(viewporter.isLandscape());
 		});
 
 	</script>
