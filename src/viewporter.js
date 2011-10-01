@@ -296,7 +296,7 @@ viewporter.profiles = {
 	'iPad': {
 		ppi: 132,
 		chrome: function(w,h) {
-			return (navigator.standalone ? 0 : 78);
+			return (navigator.standalone ? 0 : /OS 5_/.test(navigator.userAgent) ? 96 : 78);
 		}
 	},
 
@@ -337,6 +337,16 @@ viewporter.profiles = {
 	'Desire_A8181|DesireHD_A9191': {
 		width: 800,
 		height: 480
-	}
+	},
 
+	// Asus Transformer TF101
+	'TF101': {
+		ppi: 160,
+		portrait: {
+			width: function(w, h) { return h; },
+			height: function(w, h) { return w; }
+		},
+		chrome: 103,
+		inverseLandscape: true
+	}
 };
