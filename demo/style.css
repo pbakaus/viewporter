@@ -50,15 +50,15 @@ p {
 }
 
 #orientationlock {
-	width: 100%;
-	height: 100%;
 	position: absolute;
 	z-index: 1000;
 	top: 0;
 	left: 0;
+	bottom: 0;
+	right: 0;
 	background: #333;
 	color: #fff;
-	font-size: 5em;
+	font-size: 2em;
 	padding: 1em;
 	padding-top: 3em;
 	display: none;

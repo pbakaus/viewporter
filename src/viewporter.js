@@ -1,3 +1,11 @@
+/*
+ * Viewporter
+ * http://github.com/zynga/viewporter
+ *
+ * Copyright 2011, Zynga Inc.
+ * Licensed under the MIT License.
+ * https://raw.github.com/zynga/viewporter/master/MIT-LICENSE.txt
+ */
 var viewporter;
 (function() {
 
