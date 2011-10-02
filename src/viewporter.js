@@ -43,12 +43,12 @@ var viewporter;
 	if (!viewporter.ACTIVE) {
 		return;
 	}
-	
+
 	// create private constructor with prototype..just looks cooler
 	var _Viewporter = function() {
-		
+
 		var that = this;
-		
+
 		this.data = {};
 		this.IS_ANDROID = /Android/.test(navigator.userAgent);
 
@@ -85,12 +85,12 @@ var viewporter;
 
 			// try to fetch a profile
 			var profile = this.getProfile();
-			
+
 			 // Y U NO FOUND DEVICE?
 			if(!profile) {
 				return this.triggerWindowEvent('viewportunknown');
 			}
-			
+
 			// find out if the device is landscape per default (i.e. the Motorola Xoom)
 			DEFAULT_ROTATION_LANDSCAPE = profile ? profile.inverseLandscape : false;
 
@@ -143,11 +143,11 @@ var viewporter;
 				scale: scale,
 				chromeHeight: chromeHeight * (chromeWasPrescaled ? 1 : ppiFactor)
 			};
-			
+
 			viewporter.DEVICE_SUPPORTED = true;
 
 		},
-		
+
 		prepareVisualViewport: function() {
 
 			// in an interval, try scrolling the top shit away until the window height fits with the height I think should be the right height
@@ -155,45 +155,45 @@ var viewporter;
 				currentHeight = window.innerHeight,
 				iterationCount = 0,
 				interval = window.setInterval(function() {
-					
+
 					// make the height of the document really large, so we actually have a chance to scroll the url bar away
 					if(!viewporter.DEVICE_SUPPORTED) {
 						that.maximizeDocumentElement();
 					}
-					
+
 					// this tries to scroll away the top chrome
 					window.scrollTo(0,1);
-			
+
 					// try to see if the best condition matches, otherwise timeout after 10 iterations (100ms)
 					//$('body').append('<p>'+window.innerHeight+', '+that.data.chromeHeight+'</p>');
-					if( (viewporter.DEVICE_SUPPORTED && ( Math.abs(window.innerHeight - Math.ceil(that.data.height - that.data.chromeHeight)) < 5 )) || (iterationCount > 10) ) { 
-						
+					if( (viewporter.DEVICE_SUPPORTED && ( Math.abs(window.innerHeight - Math.ceil(that.data.height - that.data.chromeHeight)) < 5 )) || (iterationCount > 10) ) {
+
 						// clear the running checks
 						clearInterval(interval);
-						
+
 						// reset the height of the document
 						if(!viewporter.DEVICE_SUPPORTED) {
 							//that.fixDocumentElement(window.innerHeight);
 						}
-						
+
 						// let everyone know we're finally ready
 						that.triggerWindowEvent(!that._firstUpdateExecuted ? 'viewportready' : 'viewportchange');
 						that._firstUpdateExecuted = true;
-						
+
 					}
-			
+
 					iterationCount++;
 
 				}, 10);
-			
+
 		},
-		
+
 		triggerWindowEvent: function(name) {
 			var event = document.createEvent("Event");
 			event.initEvent(name, false, false);
 			window.dispatchEvent(event);
 		},
-		
+
 		getProfile: function() {
 			for(var searchTerm in viewporter.profiles) {
 				if(new RegExp(searchTerm).test(navigator.userAgent)) {
@@ -202,7 +202,7 @@ var viewporter;
 			}
 			return null;
 		},
-		
+
 		/*
 		 * Meta viewport functionality
 		 */
@@ -215,7 +215,7 @@ var viewporter;
 			document.documentElement.style.minHeight = ( height || (this.data.height - this.data.chromeHeight) )+'px';
 			document.documentElement.style.minWidth = this.data.width+'px';
 		},
-		
+
 		findMetaNode: function(name) {
 			var meta = document.getElementsByTagName('meta');
 			for (var i=0; i < meta.length; i++) {
@@ -223,7 +223,7 @@ var viewporter;
 					return meta[i];
 				}
 			}
-			return null;			
+			return null;
 		},
 
 		setMetaViewport: function() {
@@ -240,7 +240,7 @@ var viewporter;
 			document.getElementsByTagName('head')[0].appendChild(node);
 
 		},
-		
+
 		updateMetaViewport: function(node) {
 
 			node = node || document.getElementById('metaviewport');
@@ -252,22 +252,22 @@ var viewporter;
 					'minimum-scale=' + this.data.scale,
 					'maximum-scale=' + this.data.scale
 				] : ['width=device-width', 'initial-scale=1', 'minimum-scale=1', 'maximum-scale=1'];
-			
+
 			// if we're on Android, we need to give the viewport a target density
 			if(this.IS_ANDROID) {
 				content.unshift('target-densityDpi='+(viewporter.DEVICE_DENSITY ? (viewporter.settings.maxDensity || 'device-dpi') : 'device-dpi'));
 			}
-		
+
 			// apply viewport data
 			viewporter.META_VIEWPORT_CONTENT = content.join(',');
 			node.setAttribute('content', viewporter.META_VIEWPORT_CONTENT);
-				
+
 			if(viewporter.DEVICE_SUPPORTED) {
 				this.fixDocumentElement();
 			}
 
 		}
-		
+
 	};
 
 	// initialize
@@ -284,27 +284,29 @@ viewporter.profiles = {
 		width: function(w,h) { return w * window.devicePixelRatio; },
 		height: function(w,h) {  return h * window.devicePixelRatio; },
 		chromePrescale: function(w,h,scale) {
-			
+
 			// TODO: include status bar style
 			// find out iOS specific stuff (web app)
 			//var statusBarStyle = _findMeta('apple-mobile-web-app-status-bar-style');
 			//if(statusBarStyle) {
 			//	IOS_STATUS_BAR_STYLE = statusBarStyle.getAttribute('content');
-			//}			
-			
+			//}
+
 			if(window.devicePixelRatio >= 2) {
 				return ((navigator.standalone ? 0 : (viewporter.isLandscape() ? 100 : 124)) * scale) + 2;
 			} else {
 				return ((navigator.standalone ? 0 : (viewporter.isLandscape() ? 50 : 62)) * scale) + 2;
 			}
-			
+
 		}
 	},
 
 	'iPad': {
 		ppi: 132,
 		chrome: function(w,h) {
-			return (navigator.standalone ? 0 : 78);
+			// old, deprecated one:
+			// return (navigator.standalone ? 0 : 78);
+			return (navigator.standalone ? 0 : ( /OS 5_/.test(navigator.userAgent) ? 96 : 78) );
 		}
 	},
 
@@ -345,6 +347,18 @@ viewporter.profiles = {
 	'Desire_A8181|DesireHD_A9191': {
 		width: 800,
 		height: 480
+	},
+
+	// Asus eePad Transformer TF101
+	// Thanks to @cubiq
+	'TF101': {
+		ppi: 160,
+		portrait: {
+			width: function(w, h) { return h; },
+			height: function(w, h) { return w; }
+		},
+		chrome: 103,
+		inverseLandscape: true
 	}
 
 };
