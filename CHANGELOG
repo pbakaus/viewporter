@@ -1,0 +1,7 @@
+v2.0
+	
+	* completely refactored viewport detection
+	* removed: maxDensity setting (use v1 if needed), now defaulting to device-width
+	* removed: all debug constants except for viewporter.ACTIVE
+	* added: Viewporter now needs a wrapper div around the body with the id 'viewporter'
+	* added: Sites running Viewport now need the following meta viewport tag: <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
