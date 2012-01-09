@@ -33,22 +33,6 @@ p {
 	right: 0;
 }
 
-#meter {
-	height: 70px;
-	width: 100px;
-	background: yellow;
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	z-index: 2;
-	padding: 5px;
-}
-
-#meter span {
-	color: black;
-	font-size: 10px;
-}
-
 #orientationlock {
 	position: absolute;
 	z-index: 1000;

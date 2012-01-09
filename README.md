@@ -1,4 +1,4 @@
-Zynga Viewporter
+Zynga Viewporter v2.0
 ================
 
 Viewporter is a open-source JavaScript project by Zynga to ease mobile viewport management. It specifically simplifies the part of setting up the right screen dimensions and removes the pain from handling the *viewport* meta tag manually.
@@ -6,23 +6,38 @@ Viewporter is a open-source JavaScript project by Zynga to ease mobile viewport 
 What does it do?
 ----------------
 
-When put into the header of a page and when running a mobile device, Viewporter will initialize itself automatically right away and writes the correct *viewport* meta tag to the page. Additionally, it rewrites the tag as soon as it registers an orientationchange event (when the device is rotated). It will first try to scroll away any URL or debug bars to maximize the visible window, and then substracts the remaining chrome/UI height from the window, effectively removing ugly scrollbars along the way. It also by default always triggers the native resolution, mapping device pixels to CSS pixels, for a maximum performance boost.
+When put into the header of a page and when running a mobile device, Viewporter will first try to scroll away any URL or debug bars to maximize the visible window, and then substracts the remaining chrome/UI height from the window, effectively removing ugly scrollbars along the way. It will also track orientationchange, thus, you will always have a maximized viewing experience.
+
+How to use?
+-----------
+
+In v1, all you had to to was to put Viewporter into the head of the page. There's just a little bit more to do in v2, but it isn't painful:
+
+# Add the following meta viewport to the <head> of your page:
+	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
+# Wrap your <body> element with the viewporter wrapper div:
+	<body>
+	<div id="viewporter">
+		...
+	</div>
+	</body>
+
+That's it, really! Feel free to have a look at the demo pages if something doesn't work as expected.
 
 What's wrong with doing it manually?
 ------------------------------------
 
 You could of course try to set the viewport meta tag yourselves, as suggested in [various](https://developer.mozilla.org/en/mobile/viewport_meta_tag) [places](http://dev.opera.com/articles/view/an-introduction-to-meta-viewport-and-viewport/), usually something like *&lt;meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"&gt;*. You will quickly recognize two apparent issues:
 
-* device-width is lying (device-width is often *not* the actual screen width)
 * proportional device-height doesn't subtract the chrome height, so the window is always larger than the viewport when set, causing scrollbars even on empty pages
 * rotating the device will cause the page to zoom (as device-width isn't inverted on rotation)
+* even with a manually fixed viewport, there's a stupid gap at the bottom of the page (when using absolutely positioned elements)
 
 Advantages of using Viewporter
 --------------------
 
 So what's in it for you? There's a couple of automatic advantages for you when the Viewporter is running. Here's a list:
 
-* Rendering speed boost (by triggering native resolutions)
 * Maximized viewport (scrolling away unneeded UI)
 * Easy layouting
 
@@ -34,19 +49,11 @@ Yep. Take a *&lt;div&gt;*, position it absolutely, set its width and height to "
 API
 ---
 
-Viewporter has a couple of useful settings, constants, events and methods.
-
-### Settings
-
-* z.viewporter.settings.maxDensity (default: 163)
-  This setting will override the native resolution for a given PPI. This allows you to design a 100px element that say, correlates to 2cm on any screen, on any device.
+Viewporter is almost zero configuration. There's only one constant to check if Viewporter is in fact running, a convienience method to detect landscape orientation and a smart ready callback function. In addition, there's a couple of events you will likely want to use.
 
 ### Constants
 
 * z.viewporter.ACTIVE
-* z.viewporter.DEVICE_SUPPORTED
-* z.viewporter.DEVICE_DENSITY
-* z.viewporter.META_VIEWPORT_CONTENT
 
 ### Methods
 
@@ -59,4 +66,3 @@ All events fire as native events on the window object.
 
 * viewportready - fires as soon as the Viewporter has been executed for the first time
 * viewportchange - fires when the viewport changes, i.e. the device is rotated, and after Viewporter has been executed again
-* viewportunknown - fires when no explicit profile for this device is available (viewporter might still be able to run)

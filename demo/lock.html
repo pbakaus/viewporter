@@ -7,6 +7,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<!-- This exact meta viewport is required for Viewporter for work properly -->
+	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
 	
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
 	
@@ -15,21 +18,17 @@
 	
 	<script type="text/javascript">
 
-		viewporter.settings.maxDensity = false;
-
 		var log = function() {
-			$("body").append("<p>"+Array.prototype.slice.call(arguments).join(' ')+"</p>");
+			$("#viewporter").append("<p>"+Array.prototype.slice.call(arguments).join(' ')+"</p>");
 		};
 		
 		var debug = function() {
 			
 			log('landscape:', viewporter.isLandscape(), '('+window.orientation+')');
-			log('ppi:', viewporter.DEVICE_DENSITY);
 
 			$('#viewporter-debug-width').text(window.innerWidth);
 			$('#viewporter-debug-height').text(window.innerHeight);
 			$('#viewporter-debug-useragent').text(navigator.userAgent);
-			$('#viewporter-debug-metaviewport').text(viewporter.META_VIEWPORT_CONTENT);
 			
 		};
 		
@@ -46,19 +45,18 @@
 	
 </head>
 <body>
+<div id="viewporter">
 	
 	<div id="orientationlock">Please rotate your device to use this demo application.</div>
-	
-	<div id="meter"><span>if DPI normalization is on, check if this element has the same size on every device.</span></div>
-	
+
 	<div id="checker-bl">
 		<p><strong>window width:</strong> <span id="viewporter-debug-width"></span></p>
 		<p><strong>window height:</strong> <span id="viewporter-debug-height"></span></p>
 	</div>
 	<div id="checker-tr">
 		<p><strong>user agent:</strong> <span id="viewporter-debug-useragent"></span></p>
-		<p><strong>meta viewport:</strong> <span id="viewporter-debug-metaviewport"></span></p>
 	</div>
 
+</div>
 </body>
 </html>
