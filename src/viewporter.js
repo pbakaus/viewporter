@@ -38,8 +38,7 @@ var viewporter;
 
 		this.IS_ANDROID = /Android/.test(navigator.userAgent);
 
-		// listen for document ready, then try to prepare the visual viewport and start firing custom events
-		document.addEventListener('DOMContentLoaded', function() {
+		var _onReady = function() {
 
 			// scroll the shit away and fix the viewport!
 			that.prepareVisualViewport();
@@ -53,7 +52,19 @@ var viewporter;
 				}
 			}, false);
 
-		}, false);
+		};
+
+
+		// listen for document ready if not already loaded
+		// then try to prepare the visual viewport and start firing custom events
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', function() {
+				_onReady();
+			}, false);
+		} else {
+			_onReady();
+		}
+
 
 	};
 
@@ -69,7 +80,7 @@ var viewporter;
 		},
 
 		prepareVisualViewport: function() {
-			
+
 			var that = this;
 
 			// maximize the document element's height to be able to scroll away the url bar
@@ -94,7 +105,7 @@ var viewporter;
 						? (deviceProfile ? window.innerHeight === deviceProfile[orientation] : --iterations < 0) // Android: either match against a device profile, or brute force
 						: (window.innerHeight > startHeight || --iterations < 0) // iOS is comparably easy!
 				) {
-					
+
 					// set minimum height of content to new window height
 					document.documentElement.style.minHeight = window.innerHeight + 'px';
 
@@ -110,7 +121,7 @@ var viewporter;
 				}
 
 			}, 10);
-				
+
 		},
 
 		triggerWindowEvent: function(name) {
