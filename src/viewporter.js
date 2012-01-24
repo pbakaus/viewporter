@@ -14,6 +14,7 @@ var viewporter;
 
 		// constants
 		ACTIVE: (('ontouchstart' in window) || (/webos/i).test(navigator.userAgent)),
+		READY: false,
 
 		// methods
 		isLandscape: function() {
@@ -123,6 +124,7 @@ var viewporter;
 					clearInterval(check);
 
 					// let everyone know we're finally ready
+					viewporter.READY = true;
 					that.triggerWindowEvent(!that._firstUpdateExecuted ? 'viewportready' : 'viewportchange');
 					that._firstUpdateExecuted = true;
 				}
