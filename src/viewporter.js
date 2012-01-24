@@ -80,15 +80,23 @@ var viewporter;
 			return null;
 		},
 
+		postProcess: function() {
+
+			// let everyone know we're finally ready
+			viewporter.READY = true;
+
+			this.triggerWindowEvent(!this._firstUpdateExecuted ? 'viewportready' : 'viewportchange');
+			this._firstUpdateExecuted = true;
+
+		},
+
 		prepareVisualViewport: function() {
 
 			var that = this;
 
 			// if we're running in webapp mode (iOS), there's nothing to scroll away
 			if(navigator.standalone) {
-				this.triggerWindowEvent(!this._firstUpdateExecuted ? 'viewportready' : 'viewportchange');
-				this._firstUpdateExecuted = true;
-				return;				
+				return this.postProcess();				
 			}			
 
 			// maximize the document element's height to be able to scroll away the url bar
@@ -123,10 +131,9 @@ var viewporter;
 
 					clearInterval(check);
 
-					// let everyone know we're finally ready
-					viewporter.READY = true;
-					that.triggerWindowEvent(!that._firstUpdateExecuted ? 'viewportready' : 'viewportchange');
-					that._firstUpdateExecuted = true;
+					// fire events, get ready
+					that.postProcess();
+
 				}
 
 			}, 10);
