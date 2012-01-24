@@ -83,6 +83,13 @@ var viewporter;
 
 			var that = this;
 
+			// if we're running in webapp mode (iOS), there's nothing to scroll away
+			if(navigator.standalone) {
+				this.triggerWindowEvent(!this._firstUpdateExecuted ? 'viewportready' : 'viewportchange');
+				this._firstUpdateExecuted = true;
+				return;				
+			}			
+
 			// maximize the document element's height to be able to scroll away the url bar
 			document.documentElement.style.minHeight = '5000px';
 
