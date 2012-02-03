@@ -12,6 +12,9 @@ var viewporter;
 	// initialize viewporter object
 	viewporter = {
 
+		// options
+		forceDetection: false,
+
 		// constants
 		ACTIVE: (('ontouchstart' in window) || (/webos/i).test(navigator.userAgent)),
 		READY: false,
@@ -72,6 +75,11 @@ var viewporter;
 	_Viewporter.prototype = {
 
 		getProfile: function() {
+
+			if(viewporter.forceDetection) {
+				return null;
+			}
+
 			for(var searchTerm in viewporter.profiles) {
 				if(new RegExp(searchTerm).test(navigator.userAgent)) {
 					return viewporter.profiles[searchTerm];

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<title>Viewporter enabled (Mapped to device pixels)</title>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<script src="../src/viewporter.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript">
+
+		viewporter.forceDetection = true;
+
+		(function() {
+			
+			var scale = 1;
+
+			if(navigator.userAgent.indexOf("iPhone") > -1 && window.devicePixelRatio > 1) {
+				scale /= window.devicePixelRatio;
+			}
+
+			document.write('<meta name="viewport" content="' + (navigator.userAgent.indexOf("Android") > -1 ? 'target-densitydpi=device-dpi,' : '') + 'initial-scale=' + scale + ',maximum-scale=' + scale + '" />');
+
+		})();
+
+	</script>
+	
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+	
+	<script type="text/javascript">
+
+		var log = function() {
+			$("#viewporter").append("<p>"+Array.prototype.slice.call(arguments).join(' ')+"</p>");
+		};
+		
+		var debug = function() {
+			
+			log('landscape:', viewporter.isLandscape(), '('+window.orientation+')');
+
+			$('#viewporter-debug-width').text(window.innerWidth);
+			$('#viewporter-debug-height').text(window.innerHeight);
+			$('#viewporter-debug-useragent').text(navigator.userAgent);
+			
+		};
+		
+		$(window).bind(viewporter.ACTIVE ? 'viewportready viewportchange' : 'load', function() {
+			debug();
+		});
+
+	</script>
+	
+</head>
+<body>
+<div id="viewporter"><!-- This wrapper element is also required -->
+
+	<div id="checker-bl">
+		<p><strong>window width:</strong> <span id="viewporter-debug-width"></span></p>
+		<p><strong>window height:</strong> <span id="viewporter-debug-height"></span></p>
+	</div>
+	<div id="checker-tr">
+		<p><strong>user agent:</strong> <span id="viewporter-debug-useragent"></span></p>
+	</div>
+
+</div>
+</body>
+</html>
