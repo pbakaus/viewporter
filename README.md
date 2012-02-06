@@ -53,16 +53,17 @@ Viewporter is almost zero configuration. There's only one constant to check if V
 
 ### Options
 
-* z.viewporter.forceDetection (Boolean) - defaults to false, enabling it will cause the Viewporter not to use its profiles for devices (see devicepixel demo)
+* viewporter.forceDetection (Boolean) - defaults to false, enabling it will cause the Viewporter not to use its profiles for devices (see devicepixel demo)
 
 ### Constants
 
-* z.viewporter.ACTIVE
+* viewporter.ACTIVE - _true_ if the Viewporter is enabled and running (smartphones!), false if not (Desktop, non-touch device)
+* viewporter.READY - _true_ when the viewportready function has already been fired. Useful if you're lazy loading initializing code
 
 ### Methods
 
-* z.viewporter.isLandscape() - returns wether the device is rotated to landscape or not
-* z.viewporter.ready() - accepts a callback and fires it when the viewporter has been successfully executed
+* viewporter.isLandscape() - returns wether the device is rotated to landscape or not
+* viewporter.ready() - accepts a callback and fires it when the viewporter has been successfully executed
 
 ### Events
 
