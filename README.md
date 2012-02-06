@@ -1,4 +1,4 @@
-Zynga Viewporter v2.0
+Zynga Viewporter v2.1
 ================
 
 Viewporter is a open-source JavaScript project by Zynga to ease mobile viewport management. It specifically simplifies the part of setting up the right screen dimensions and removes the pain from handling the *viewport* meta tag manually.
