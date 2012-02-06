@@ -1,3 +1,8 @@
+v2.1
+
+	* added new option "forceDetection" to disable internal device profiles for custom resolutions
+	* new devicepixel.html demo that brings back the native pixel mapping functionality back to Viewporter
+
 v2.0
 	
 	* completely refactored viewport detection

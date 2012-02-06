@@ -51,6 +51,10 @@ API
 
 Viewporter is almost zero configuration. There's only one constant to check if Viewporter is in fact running, a convienience method to detect landscape orientation and a smart ready callback function. In addition, there's a couple of events you will likely want to use.
 
+### Options
+
+* z.viewporter.forceDetection (Boolean) - defaults to false, enabling it will cause the Viewporter not to use its profiles for devices (see devicepixel demo)
+
 ### Constants
 
 * z.viewporter.ACTIVE
