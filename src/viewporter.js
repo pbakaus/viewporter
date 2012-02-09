@@ -9,6 +9,8 @@
 var viewporter;
 (function() {
 
+	var _viewporter;
+
 	// initialize viewporter object
 	viewporter = {
 
@@ -29,6 +31,12 @@ var viewporter;
 
 		ready: function(callback) {
 			window.addEventListener('viewportready', callback, false);
+		},
+		
+		refresh: function(){
+			if (_viewporter){
+				_viewporter.prepareVisualViewport();
+			}
 		}
 
 	};
@@ -176,7 +184,7 @@ var viewporter;
 	};
 
 	// initialize
-	new _Viewporter();
+	_viewporter = new _Viewporter();
 
 })();
 
