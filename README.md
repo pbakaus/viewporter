@@ -55,6 +55,8 @@ Viewporter is almost zero configuration. There's only one constant to check if V
 
 * viewporter.forceDetection (Boolean) - defaults to false, enabling it will cause the Viewporter not to use its profiles for devices (see devicepixel demo)
 
+* viewporter.preventPageScroll (Boolean) - defaults to false, enabling it will prevent scroll events on the body element. Use this option to cancel iOS overscroll effect, which causes the view to bounce back when scrolling exceeds the bounds. Additionally it will scroll back the pane if the user clicks the page after selecting the address bar on iOS.
+
 ### Constants
 
 * viewporter.ACTIVE - _true_ if the Viewporter is enabled and running (smartphones!), false if not (Desktop, non-touch device)
