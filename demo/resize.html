@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	
-	<title>No Page Scroll</title>
+	<title>Resize</title>
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,7 +24,7 @@
 		<p id="coords"></p>
 	</div>
 	<div id="checker-tr">
-		<p></p>
+		<p id="events"></p>
 	</div>
 
 </div>
@@ -33,24 +33,22 @@
 
 	viewporter.preventPageScroll = true;
 	
+	window.addEventListener("resize", function(){
+		viewporter.refresh();
+		document.getElementById("events").innerHTML += "resize<br>";
+	});
+	
 	document.addEventListener('DOMContentLoaded', function() {
 		
 		if (navigator.geolocation){ 
-
 			function success(position){
 				var coords = [position.coords.latitude, position.coords.longitude]
 				document.getElementById("coords").innerHTML = coords.join(", ");
-				viewporter.refresh();
-			}
-		
-			function error(){
-				viewporter.refresh();
 			}
 
-			navigator.geolocation.getCurrentPosition(success, error);
-			viewporter.refresh();
+			navigator.geolocation.getCurrentPosition(success);
 		}
-	
+
 	});
 </script>
 
