@@ -66,7 +66,7 @@ Viewporter is almost zero configuration. There's only one constant to check if V
 
 * viewporter.isLandscape() - returns wether the device is rotated to landscape or not
 * viewporter.ready() - accepts a callback and fires it when the viewporter has been successfully executed
-* viewporter.refresh() - refreshes the viewport. This is eg. useful when the browser displays an inline confirmations such as the geolocation alert on Android. **Hint**: Listen for `resize` events and then call this mehtod.
+* viewporter.refresh() - refreshes the viewport. This is eg. useful when the browser displays an inline confirmations such as the geolocation alert on Android. **Hint**: Listen for `resize` events and then call this method.
 
 ### Events
 
