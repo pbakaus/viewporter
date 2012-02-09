@@ -32,13 +32,14 @@
 <script type="text/javascript">
 
 	viewporter.preventPageScroll = true;
-	
-	window.addEventListener("resize", function(){
-		viewporter.refresh();
-		document.getElementById("events").innerHTML += "resize<br>";
-	});
-	
+
 	document.addEventListener('DOMContentLoaded', function() {
+		
+		// listen for "resize" events and trigger "refresh" method.
+		window.addEventListener("resize", function(){
+			viewporter.refresh();
+			document.getElementById("events").innerHTML += "resize<br>";
+		});
 		
 		if (navigator.geolocation){ 
 			function success(position){
