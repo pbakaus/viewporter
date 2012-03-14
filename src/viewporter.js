@@ -40,7 +40,8 @@ var viewporter;
 
 		var that = this;
 
-		this.IS_ANDROID = /Android/.test(navigator.userAgent);
+		// Scroll away the header, but not in Chrome
+		this.IS_ANDROID = /Android/.test(navigator.userAgent) && !/CrMo/.test(navigator.userAgent);
 
 		var _onReady = function() {
 
@@ -104,8 +105,8 @@ var viewporter;
 
 			// if we're running in webapp mode (iOS), there's nothing to scroll away
 			if(navigator.standalone) {
-				return this.postProcess();				
-			}			
+				return this.postProcess();
+			}
 
 			// maximize the document element's height to be able to scroll away the url bar
 			document.documentElement.style.minHeight = '5000px';
