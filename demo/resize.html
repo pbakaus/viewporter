@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<title>Resize</title>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<!-- This exact meta viewport is required for Viewporter for work properly -->
+	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
+	
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+	
+	<script src="../src/viewporter.js"></script>
+	
+	
+</head>
+<body>
+<div id="viewporter"><!-- This wrapper element is also required -->
+
+	<div id="checker-bl">
+		<p id="coords"></p>
+	</div>
+	<div id="checker-tr">
+		<p id="events"></p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+
+	viewporter.preventPageScroll = true;
+
+	document.addEventListener('DOMContentLoaded', function() {
+		
+		// listen for "resize" events and trigger "refresh" method.
+		window.addEventListener("resize", function(){
+			viewporter.refresh();
+			document.getElementById("events").innerHTML += "resize<br>";
+		});
+		
+		if (navigator.geolocation){ 
+			function success(position){
+				var coords = [position.coords.latitude, position.coords.longitude]
+				document.getElementById("coords").innerHTML = coords.join(", ");
+			}
+
+			navigator.geolocation.getCurrentPosition(success);
+		}
+
+	});
+</script>
+
+</body>
+</html>
