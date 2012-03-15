@@ -26,6 +26,10 @@ var viewporter;
 
 		ready: function(callback) {
 			window.addEventListener('viewportready', callback, false);
+		},
+		
+		change: function(callback) {
+			window.addEventListener('viewportchange', callback, false);
 		}
 
 	};
