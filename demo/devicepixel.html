@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<title>Viewporter enabled (Mapped to device pixels)</title>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<!-- There's no meta viewport here as the native helper writes it into the <head> -->
+
+
+	<link rel="stylesheet" href="common/style.css" type="text/css" media="screen">
+
+	<!-- important files (non-optional) -->
+	<script src="../src/viewporter.js"></script>
+	<script src="../src/viewporter.native.js"></script><!-- important: this has to be in the <head>! -->
+
+	<!-- the following two are optional, and just for this demo -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="common/debug.js"></script>
+	
+</head>
+<body>
+<div id="viewporter"><!-- This wrapper element is required -->
+
+	<div id="checker-bl">
+		<p><strong>window width:</strong> <span id="viewporter-debug-width"></span></p>
+		<p><strong>window height:</strong> <span id="viewporter-debug-height"></span></p>
+	</div>
+	<div id="checker-tr">
+		<p><strong>user agent:</strong> <span id="viewporter-debug-useragent"></span></p>
+	</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<title>Viewporter enabled</title>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<!-- This exact meta viewport is required for Viewporter for work properly -->
+	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
+	
+	<link rel="stylesheet" href="common/style.css" type="text/css" media="screen">
+	
+	<!-- important files (non-optional) -->
+	<script src="../src/viewporter.js"></script>
+
+	<!-- the following two are optional, and just for this demo -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="common/debug.js"></script>
+
+	<script>
+		// orientation locking
+		$(window).bind('viewportready viewportchange', function() {
+			$('#orientationlock').toggle(!viewporter.isLandscape());
+		});
+	</script>
+	
+</head>
+<body>
+<div id="viewporter">
+	
+	<div id="orientationlock"><p>Please rotate your device to use this demo application.</p></div>
+
+	<div id="checker-bl">
+		<p><strong>window width:</strong> <span id="viewporter-debug-width"></span></p>
+		<p><strong>window height:</strong> <span id="viewporter-debug-height"></span></p>
+	</div>
+	<div id="checker-tr">
+		<p><strong>user agent:</strong> <span id="viewporter-debug-useragent"></span></p>
+	</div>
+
+</div>
+</body>
+</html>

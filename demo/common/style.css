@@ -1,0 +1,66 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial;
+	font-size: 12px;
+	color: white;
+	background: green;
+	-webkit-text-size-adjust: none; /* important, or your text resizes randomly on rotation! */
+}
+
+p {
+	margin: 0;
+	padding: 1em;
+	padding-bottom: 0;
+}
+
+#checker-bl, #checker-tr {
+	position: absolute;
+	width: 50%;
+	height: 50%;
+}
+
+#checker-bl {
+	position: absolute;
+	background: blue;
+	bottom: 0;
+	left: 0;
+}
+
+#checker-tr {
+	position: absolute;
+	background: red;
+	top: 0;
+	right: 0;
+}
+
+#orientationlock {
+	position: absolute;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: #333;
+	color: #fff;
+	text-shadow: 1px 1px 0px #000;
+	font-size: 2em;
+	text-align: center;
+	display: none;
+}
+
+#orientationlock p {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	margin-top: -2em;
+	padding: 0;
+}
+
+canvas {
+	background: #eee;
+	position: absolute;
+	top: 0;
+	left: 0;
+}

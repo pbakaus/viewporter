@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<title>Viewporter disabled</title>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<!-- This exact meta viewport is required for Viewporter for work properly -->
+	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
+
+	<link rel="stylesheet" href="common/style.css" type="text/css" media="screen">
+
+	<!-- the following two are optional, and just for this demo -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script>
+		var viewporter = { isLandscape: function() {} }; // so the debug.js doesn't break
+	</script>
+	<script src="common/debug.js"></script>
+	
+</head>
+<body>
+	
+	<div id="checker-bl">
+		<p><strong>window width:</strong> <span id="viewporter-debug-width"></span></p>
+		<p><strong>window height:</strong> <span id="viewporter-debug-height"></span></p>
+	</div>
+	<div id="checker-tr">
+		<p><strong>user agent:</strong> <span id="viewporter-debug-useragent"></span></p>
+	</div>
+
+</body>
+</html>
