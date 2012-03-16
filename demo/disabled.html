@@ -11,30 +11,14 @@
 	<!-- This exact meta viewport is required for Viewporter for work properly -->
 	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
 
-	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="common/style.css" type="text/css" media="screen">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>	
-	<script type="text/javascript">
-
-		var log = function() {
-			$("body").append("<p>"+Array.prototype.slice.call(arguments).join(' ')+"</p>");
-		};
-		
-		var debug = function() {
-			
-			log('landscape:', '('+window.orientation+')');
-
-			$('#viewporter-debug-width').text(window.innerWidth);
-			$('#viewporter-debug-height').text(window.innerHeight);
-			$('#viewporter-debug-useragent').text(navigator.userAgent);
-			
-		};
-		
-		$(window).bind('load', function() {
-			debug();
-		});
-
+	<!-- the following two are optional, and just for this demo -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script>
+		var viewporter = { isLandscape: function() {} }; // so the debug.js doesn't break
 	</script>
+	<script src="common/debug.js"></script>
 	
 </head>
 <body>
