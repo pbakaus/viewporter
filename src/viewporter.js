@@ -45,7 +45,7 @@ var viewporter;
 		var that = this;
 
 		// Scroll away the header, but not in Chrome
-		this.IS_ANDROID = /Android/.test(navigator.userAgent) && !/CrMo/.test(navigator.userAgent);
+		this.IS_ANDROID = /Android/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
 
 		var _onReady = function() {
 
