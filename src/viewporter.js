@@ -9,11 +9,16 @@
 var viewporter;
 (function() {
 
+	var _viewporter;
+
 	// initialize viewporter object
 	viewporter = {
 
 		// options
 		forceDetection: false,
+		
+		// set to true to prevent page scroll. 
+		preventPageScroll: false,
 
 		// constants
 		ACTIVE: (('ontouchstart' in window) || (/webos/i).test(navigator.userAgent)),
@@ -30,8 +35,13 @@ var viewporter;
 		
 		change: function(callback) {
 			window.addEventListener('viewportchange', callback, false);
-		}
+		},
 
+		refresh: function(){
+			if (_viewporter){
+				_viewporter.prepareVisualViewport();
+			}
+		}
 	};
 
 	// if we are on Desktop, no need to go further
@@ -61,6 +71,22 @@ var viewporter;
 				}
 			}, false);
 
+			
+			// prevent page scroll if `preventPageScroll` option was set to `true`
+			document.body.addEventListener('touchmove', function(event) {
+				if (viewporter.preventPageScroll){
+					event.preventDefault();
+				}
+			}, false);
+			
+			// reset page scroll if `preventPageScroll` option was set to `true`
+			// this is used after showing the address bar on iOS
+			document.body.addEventListener("touchstart", function() {
+				if (viewporter.preventPageScroll) {
+					that.prepareVisualViewport();
+				}
+			}, false);
+			
 		};
 
 
@@ -168,7 +194,7 @@ var viewporter;
 	};
 
 	// initialize
-	new _Viewporter();
+	_viewporter = new _Viewporter();
 
 })();
 

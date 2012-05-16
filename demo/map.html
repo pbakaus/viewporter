@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>	
+	<title>Google Maps Example</title>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<!-- This exact meta viewport is required for Viewporter for work properly -->
+	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
+	
+	<style type="text/css" media="screen">
+		html, body {
+			margin: 0;
+			padding: 0;
+			font-family: Arial;
+		}
+
+		#map {
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+		}
+	</style>
+	
+	<script src="../src/viewporter.js"></script>
+
+</head>
+<body>
+	<div id="viewporter">
+		<div id="map"></div>
+	</div>
+	
+	<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript" charset="utf-8">
+	
+	  viewporter.preventPageScroll = true;
+	
+		var eventName = viewporter.ACTIVE ? 'viewportready' : "load"; 
+	
+		google.maps.event.addDomListener(window, eventName, function(){
+			
+			var map = new google.maps.Map(document.getElementById("map"), {
+				zoom: 2,
+				center: new google.maps.LatLng(10,0),
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			});
+			
+			window.addEventListener("resize", viewporter.refresh);
+
+			if (navigator.geolocation){ 
+
+				navigator.geolocation.getCurrentPosition(function(position){
+					map.setCenter(new google.maps.LatLng(
+						position.coords.latitude, 
+						position.coords.longitude
+					));
+					map.setZoom(14);
+				});
+			}
+		});
+		
+	</script>
+	
+</body>
+</html>
