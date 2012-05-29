@@ -9,11 +9,16 @@
 var viewporter;
 (function() {
 
+	var _viewporter;
+
 	// initialize viewporter object
 	viewporter = {
 
 		// options
 		forceDetection: false,
+		
+		// set to true to prevent page scroll. 
+		preventPageScroll: false,
 
 		// constants
 		ACTIVE: (('ontouchstart' in window) || (/webos/i).test(navigator.userAgent)),
@@ -30,8 +35,13 @@ var viewporter;
 		
 		change: function(callback) {
 			window.addEventListener('viewportchange', callback, false);
-		}
+		},
 
+		refresh: function(){
+			if (_viewporter){
+				_viewporter.prepareVisualViewport();
+			}
+		}
 	};
 
 	// if we are on Desktop, no need to go further
@@ -61,6 +71,22 @@ var viewporter;
 				}
 			}, false);
 
+			
+			// prevent page scroll if `preventPageScroll` option was set to `true`
+			document.body.addEventListener('touchmove', function(event) {
+				if (viewporter.preventPageScroll){
+					event.preventDefault();
+				}
+			}, false);
+			
+			// reset page scroll if `preventPageScroll` option was set to `true`
+			// this is used after showing the address bar on iOS
+			document.body.addEventListener("touchstart", function() {
+				if (viewporter.preventPageScroll) {
+					that.prepareVisualViewport();
+				}
+			}, false);
+			
 		};
 
 
@@ -123,17 +149,23 @@ var viewporter;
 			window.scrollTo(0, that.IS_ANDROID ? 1 : 0); // Android needs to scroll by at least 1px
 
 			// start the checker loop
-			var iterations = this.IS_ANDROID && !deviceProfile ? 20 : 5; // if we're on Android and don't know the device, brute force hard
+			var iterations = 40;
 			var check = window.setInterval(function() {
 
 				// retry scrolling
 				window.scrollTo(0, that.IS_ANDROID ? 1 : 0); // Android needs to scroll by at least 1px
 
-				if(
-					that.IS_ANDROID
-						? (deviceProfile ? window.innerHeight === deviceProfile[orientation] : --iterations < 0) // Android: either match against a device profile, or brute force
-						: (window.innerHeight > startHeight || --iterations < 0) // iOS is comparably easy!
-				) {
+				function androidProfileCheck() {
+					return deviceProfile ? window.innerHeight === deviceProfile[orientation] : false;
+				}
+				function iosInnerHeightCheck() {
+					return window.innerHeight > startHeight;
+				}
+
+				iterations--;
+
+				// check iterations first to make sure we never get stuck
+				if ( (that.IS_ANDROID ? androidProfileCheck() : iosInnerHeightCheck()) || iterations < 0) {
 
 					// set minimum height of content to new window height
 					document.documentElement.style.minHeight = window.innerHeight + 'px';
@@ -162,7 +194,7 @@ var viewporter;
 	};
 
 	// initialize
-	new _Viewporter();
+	_viewporter = new _Viewporter();
 
 })();
 

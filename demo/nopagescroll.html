@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<title>No Page Scroll</title>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<!-- This exact meta viewport is required for Viewporter for work properly -->
+	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
+	
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+	
+	<script src="../src/viewporter.js"></script>
+	
+	
+</head>
+<body>
+<div id="viewporter"><!-- This wrapper element is also required -->
+
+	<div id="checker-bl"><p></p></div>
+	<div id="checker-tr"><p></p></div>
+
+</div>
+
+<script type="text/javascript">
+	viewporter.preventPageScroll = true;
+</script>
+
+</body>
+</html>
