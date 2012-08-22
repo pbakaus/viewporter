@@ -17,11 +17,31 @@ var viewporter;
 		// options
 		forceDetection: false,
 		
-		// set to true to prevent page scroll. 
+		// set to true to prevent page scroll.
 		preventPageScroll: false,
 
 		// constants
-		ACTIVE: (('ontouchstart' in window) || (/webos/i).test(navigator.userAgent)),
+		ACTIVE: (function() {
+
+			// iPad's don't allow you to scroll away the UI of the browser
+			if((/ipad/i).test(navigator.userAgent)) {
+				return false;
+			}
+
+			// WebOS has no touch events, but definitely the need for viewport normalization
+			if((/webos/i).test(navigator.userAgent)) {
+				return true;
+			}
+
+			// touch enabled devices
+			if('ontouchstart' in window) {
+				return true;
+			}
+
+			return false;
+
+		})(),
+
 		READY: false,
 
 		// methods
@@ -65,7 +85,7 @@ var viewporter;
 			// listen for orientation change
 			var cachedOrientation = window.orientation;
 			window.addEventListener('orientationchange', function() {
-				if(window.orientation != cachedOrientation) {
+				if(window.orientation !== cachedOrientation) {
 					that.prepareVisualViewport();
 					cachedOrientation = window.orientation;
 				}
@@ -224,4 +244,4 @@ viewporter.profiles = {
 		landscape: 320
 	}
 
-}
+};
