@@ -16,9 +16,6 @@ var viewporter;
 
 		// options
 		forceDetection: false,
-		
-		// set to true to prevent page scroll.
-		preventPageScroll: false,
 
 		// constants
 		ACTIVE: (function() {
@@ -58,10 +55,26 @@ var viewporter;
 		},
 
 		refresh: function(){
-			if (_viewporter){
+			if (_viewporter) {
 				_viewporter.prepareVisualViewport();
 			}
+		},
+
+		preventPageScroll: function() {
+
+			// prevent page scroll if `preventPageScroll` option was set to `true`
+			document.body.addEventListener('touchmove', function(event) {
+				event.preventDefault();
+			}, false);
+
+			// reset page scroll if `preventPageScroll` option was set to `true`
+			// this is used after showing the address bar on iOS
+			document.body.addEventListener("touchstart", function() {
+				_viewporter.prepareVisualViewport();
+			}, false);
+
 		}
+
 	};
 
 	// if we are on Desktop, no need to go further
@@ -88,22 +101,6 @@ var viewporter;
 				if(window.orientation !== cachedOrientation) {
 					that.prepareVisualViewport();
 					cachedOrientation = window.orientation;
-				}
-			}, false);
-
-			
-			// prevent page scroll if `preventPageScroll` option was set to `true`
-			document.body.addEventListener('touchmove', function(event) {
-				if (viewporter.preventPageScroll){
-					event.preventDefault();
-				}
-			}, false);
-			
-			// reset page scroll if `preventPageScroll` option was set to `true`
-			// this is used after showing the address bar on iOS
-			document.body.addEventListener("touchstart", function() {
-				if (viewporter.preventPageScroll) {
-					that.prepareVisualViewport();
 				}
 			}, false);
 			
