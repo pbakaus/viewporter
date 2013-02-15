@@ -17,8 +17,15 @@ var viewporter;
 		// options
 		forceDetection: false,
 
+		disableLegacyAndroid: true,
+
 		// constants
 		ACTIVE: (function() {
+
+			// it's best not do to anything to very weak devices running Android 2.x
+			if(viewporter.disableLegacyAndroid && (/android 2/i).test(navigator.userAgent)) {
+				return false;
+			}
 
 			// iPad's don't allow you to scroll away the UI of the browser
 			if((/ipad/i).test(navigator.userAgent)) {
@@ -37,7 +44,7 @@ var viewporter;
 
 			return false;
 
-		})(),
+		}),
 
 		READY: false,
 
@@ -76,6 +83,9 @@ var viewporter;
 		}
 
 	};
+
+	// execute the ACTIVE flag
+	viewporter.ACTIVE = viewporter.ACTIVE();
 
 	// if we are on Desktop, no need to go further
 	if (!viewporter.ACTIVE) {
