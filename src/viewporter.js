@@ -22,6 +22,11 @@ var viewporter;
 		// constants
 		ACTIVE: (function() {
 
+      // First check if we have the viewporter element in doc
+      if (!document.getElementById("viewporter")) {
+        return false
+      }
+
 			// it's best not do to anything to very weak devices running Android 2.x
 			if(viewporter.disableLegacyAndroid && (/android 2/i).test(navigator.userAgent)) {
 				return false;
@@ -36,6 +41,11 @@ var viewporter;
 			if((/webos/i).test(navigator.userAgent)) {
 				return true;
 			}
+
+      // For notebook with touchscreen there is no need for viewporter to run. (Here Chrome OS and touchdisplay. Others might be added)
+      if((/cros/i).test(navigator.userAgent) && ('ontouchstart' in window)) {
+        return false;
+      }
 
 			// touch enabled devices
 			if('ontouchstart' in window) {
@@ -56,7 +66,7 @@ var viewporter;
 		ready: function(callback) {
 			window.addEventListener('viewportready', callback, false);
 		},
-		
+
 		change: function(callback) {
 			window.addEventListener('viewportchange', callback, false);
 		},
@@ -113,7 +123,7 @@ var viewporter;
 					cachedOrientation = window.orientation;
 				}
 			}, false);
-			
+
 		};
 
 
